@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-    res.json('Welcome to FoodChief :)');
+    res.json('Welcome to Shef riders :)');
 });
 
 app.use('/', router);
