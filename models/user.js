@@ -19,6 +19,24 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
+    quote: {
+        type: String,
+        default: ""
+
+    },
+    discipline: {
+        type: String,
+        default: ""
+    },
+    riderRep: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    spotsVisted: {
+        type: [spotSchema]
+    },
+
     loginAttempts: {
         type: Number,
         required: true,
@@ -128,6 +146,11 @@ UserSchema.statics.getAuthenticated = function(username, password, callBack) {
     });
 };
 
+var spotSchema = new mongoose.Schema({
+    name: String,
+    visitCount: Number
+});
+
 User = mongoose.model('User', UserSchema);
 module.exports = User;
 
@@ -152,3 +175,4 @@ User.schema.path('username').validate(function (value, respond) {
         }                                                                                                                         
     });                                                                                                                                                  
 }, 'This surname is already registered');
+
