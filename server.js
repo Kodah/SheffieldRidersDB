@@ -15,6 +15,7 @@ require('./models/models.js').initialize();
 //Routes
 var registrationRoute = require('./routes/registration');
 var authenticationRoute = require('./routes/authentication');
+var userProfileRoute = require('./routes/userProfile');
 
 
 mongoose.connect('mongodb://localhost/DB_ShefRiders');
@@ -40,5 +41,6 @@ router.get('/', function(req, res, next) {
 app.use('/', router);
 app.use('/register', registrationRoute);
 app.use('/authentication', authenticationRoute);
+app.use('/userProfile', userProfileRoute);
 
 app.listen(port);
