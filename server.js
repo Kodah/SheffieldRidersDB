@@ -41,6 +41,6 @@ router.get('/', function(req, res, next) {
 app.use('/', router);
 app.use('/register', registrationRoute);
 app.use('/authentication', authenticationRoute);
-app.use('/userProfile', userProfileRoute);
+app.use('/userprofile', userProfileRoute);
 
 app.listen(port);

@@ -2,13 +2,14 @@ var jwt = require('jsonwebtoken');
 
 var config = {};
 
-config.JWTSECRET = "AA:Frameworks:)";
+config.JWTSECRET = "SheffieldRidersSHU";
 
 config.filterRoutes = function(req) 
 {
     if (req.method === 'GET' || 
         req.path === '/register' ||
         req.path === '/authentication') 
+
     {
     	console.log("Allowed");
         return true;

@@ -15,8 +15,17 @@ router.post('/', function(req, res, next) {
     user.username = req.body.username;
     user.password = req.body.password;
     user.email = req.body.email;
-    
 
+    user.spotsVisted = [
+        {'name': 'Wharncliffe', 'visitCount': 0},
+        {'name': 'BlackaMoor', 'visitCount': 0},
+        {'name': 'LadyCanning', 'visitCount': 0},
+        {'name': 'Grenocide', 'visitCount': 0},
+        {'name': 'ParkwoodSprings', 'visitCount': 0},
+        {'name': 'MonkeyBumps', 'visitCount': 0},
+        {'name': 'BowlHills', 'visitCount': 0},
+    ]
+    
     user.save(function(err) {
 
         if (!err) {

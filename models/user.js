@@ -6,6 +6,12 @@ SALT_WORK_FACTOR = 10;
 MAX_LOGIN_ATTEMPTS = 5;
 LOCK_TIME = 60 * 5 * 1000; // 5 minute lock
 
+var spotSchema = new mongoose.Schema({
+    name: String,
+    visitCount: Number
+});
+
+
 var UserSchema = new Schema({
     username: {
         type: String,
@@ -145,11 +151,6 @@ UserSchema.statics.getAuthenticated = function(username, password, callBack) {
         });
     });
 };
-
-var spotSchema = new mongoose.Schema({
-    name: String,
-    visitCount: Number
-});
 
 User = mongoose.model('User', UserSchema);
 module.exports = User;
