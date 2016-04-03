@@ -27,8 +27,7 @@ router.post('/', function(req, res, next) {
         if (!err && user) {
             var token = jwt.sign({
                 username : username}, 
-                config.JWTSECRET, 
-                {expiresIn: 60 * 60}
+                config.JWTSECRET
                 );
             res.json(token).status(200);
         }
