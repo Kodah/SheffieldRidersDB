@@ -11,7 +11,12 @@ router.get('/', function(req, res, next) {
 
     User.find({}, {
         "username": 1,
-        "riderRep": 1
+        "riderRep": 1,
+        "spots": 1,
+        "riderRep": 1,
+        "discipline": 1,
+        "quote": 1,
+        "username": 1
     }).sort('riderRep').exec(function(err, riders) {
         res.json(riders);
     });
