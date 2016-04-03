@@ -19,14 +19,15 @@ router.get('/', function(req, res, next) {
 });
 
 //Get recipe by ID
-router.get('/:username', function(req, res, next) {
-    User.find({
+router.get('/foruser/:username', function(req, res, next) {
+    User.findOne({
         username: req.params.username
     }, {
-        "spotsVisted": 1,
+        "spots": 1,
         "riderRep": 1,
         "discipline": 1,
         "quote": 1,
+        "username": 1
     }).exec(function(err, user) {
         if (err) throw err;
 
@@ -34,17 +35,36 @@ router.get('/:username', function(req, res, next) {
     });
 });
 
+router.get('/owner', function(req, res) {
+    var username = CONFIG.getUserToken(req.get("authorization"));
+
+    User.findOne({
+        username: username
+    }, {
+        "spots": 1,
+        "riderRep": 1,
+        "discipline": 1,
+        "quote": 1,
+        "username": 1
+    }).exec(function(err, user) {
+        if (err) throw err;
+
+        res.json(user);
+    });
+})
+
+
 router.post('/checkin', function(req, res, next) {
     var username = CONFIG.getUserToken(req.get("authorization"));
 
     var conditions = {
             "username": username,
-            "spotsVisted.name": req.body.locationName
+            "spots.name": req.body.locationName
         },
 
         update = {
             "$inc": {
-                "spotsVisted.$.visitCount": 1 
+                "spots.$.visitCount": 1 
             }
         },
         options = {

@@ -39,7 +39,7 @@ var UserSchema = new Schema({
         required: true,
         default: 0
     },
-    spotsVisted: {
+    spots: {
         type: [spotSchema]
     },
 

@@ -16,7 +16,7 @@ router.post('/', function(req, res, next) {
     user.password = req.body.password;
     user.email = req.body.email;
 
-    user.spotsVisted = [
+    user.spots = [
         {'name': 'Wharncliffe', 'visitCount': 0},
         {'name': 'BlackaMoor', 'visitCount': 0},
         {'name': 'LadyCanning', 'visitCount': 0},
