@@ -83,10 +83,10 @@ router.put('/', function(req, res, next) {
         })
         race.save(function(err) {
             if (!err) {
-                res.send("Race updated").status(200);
+                res.json("Race updated").status(200);
             } else {
                 console.log(err);
-                res.status(500).send(err);
+                res.status(500).json("Errored");
             }
         });
     });
