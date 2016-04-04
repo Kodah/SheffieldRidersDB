@@ -1,4 +1,4 @@
-var models = ['./user', './race'];
+var models = ['./user', './racer', './race'];
 
 exports.initialize = function() {
     var l = models.length;

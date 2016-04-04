@@ -16,7 +16,7 @@ require('./models/models.js').initialize();
 var registrationRoute = require('./routes/registration');
 var authenticationRoute = require('./routes/authentication');
 var userProfileRoute = require('./routes/userProfile');
-
+var raceRoute = require('./routes/race');
 
 mongoose.connect('mongodb://localhost/DB_ShefRiders');
 app.use(bodyParser.urlencoded({
@@ -42,5 +42,6 @@ app.use('/', router);
 app.use('/register', registrationRoute);
 app.use('/authentication', authenticationRoute);
 app.use('/userprofile', userProfileRoute);
+app.use('/race', raceRoute);
 
 app.listen(port);

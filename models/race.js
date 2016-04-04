@@ -1,18 +1,19 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var racerSchema = new mongoose.Schema({
-    name: String,
-    startDate: Date,
-    finishDate: Date
-});
+var Racer = mongoose.model('Racer').schema;
 
-var raceSchema = new mongoose.Schema({
+var RaceSchema = new Schema({
     title: String,
+    creator: String,
     location: String,
-    racers: [racerSchema],
-    date: Date 
+    racers: [Racer],
+    date: Date ,
+    finished: {
+        type: Boolean,
+        default: false
+    }
 });
 
-Race = mongoose.model('Race', raceSchema);
+Race = mongoose.model('Race', RaceSchema);
 module.exports = Race;
