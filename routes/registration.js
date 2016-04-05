@@ -14,7 +14,7 @@ router.post('/', function(req, res, next) {
     var user = new User();
     user.username = req.body.username;
     user.password = req.body.password;
-    user.email = req.body.email;
+    user.email = req.body.username + "@bike.com";
 
     user.spots = [
         {'name': 'Wharncliffe', 'visitCount': 0},
@@ -29,15 +29,15 @@ router.post('/', function(req, res, next) {
     user.save(function(err) {
 
         if (!err) {
-            res.send("Registration successful").status(200);
+            res.json("Registration successful").status(200);
         }
         else
         {
             if (err.code === 11000) {
-                res.status(500).send('User already exists');
+                res.status(500).json('User already exists');
             };
             console.log(err);
-            res.status(500).send(err); 
+            res.status(500).json(err); 
         }
 
     });
