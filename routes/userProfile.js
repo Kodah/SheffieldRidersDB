@@ -148,7 +148,8 @@ router.put('/podiums', function(req, res) {
                         };
                         break;
                 }
-
+                race.finished = true
+                race.save();
                 User.findOneAndUpdate({
                     username: medalist.username
                 }, update, {}, callback)
