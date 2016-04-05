@@ -6,6 +6,7 @@ var CONFIG = require('../config/conf.js');
 
 //Models
 var User = mongoose.model('User');
+var Race = mongoose.model('Race');
 
 router.get('/', function(req, res, next) {
 
@@ -63,6 +64,109 @@ router.get('/owner', function(req, res) {
     });
 })
 
+router.put('/racesRaced', function(req, res) {
+    var username = CONFIG.getUserToken(req.get("authorization"));
+
+    Race.findOne({
+        _id: mongoose.Types.ObjectId(req.body.raceID)
+    }).exec(function(err, race) {
+        if (err) {
+            res.json(err)
+        }
+        if (race.creator != username) {
+            res.json("Only creator can award points");
+        } else {
+
+            var conditions = {
+                username: {
+                    "$in": req.body.racers
+                }
+            }
+            var update = {
+                "$inc": {
+                    "racesRaced": 1
+                }
+            }
+            var options = {
+                multi: true
+            };
+            User.update(conditions, update, options, callback)
+
+            function callback(err, numAffected) {
+                if (err) {
+                    res.json(err)
+                } else if (numAffected == null) {
+                    res.json("Noone updated");
+                } else {
+                    message = {
+                        "Success": numAffected
+                    };
+                    res.json(message);
+                };
+            };
+        }
+
+    });
+
+})
+
+router.put('/podiums', function(req, res) {
+    var username = CONFIG.getUserToken(req.get("authorization"));
+    var update = {};
+    var count = 0;
+
+    Race.findOne({
+        _id: req.body.raceID
+    }).exec(function(err, race) {
+        if (err) {
+            res.json(err)
+        }
+        if (race.creator != username) {
+            res.json("Only creator can award points");
+        } else {
+            req.body.medalists.forEach(function(medalist) {
+                switch (medalist.result) {
+                    case 1:
+                        update = {
+                            "$inc": {
+                                racesWon: 1
+                            }
+                        };
+                        break;
+                    case 2:
+                        update = {
+                            "$inc": {
+                                racesSecond: 1
+                            }
+                        };
+                        break;
+                    case 3:
+                        update = {
+                            "$inc": {
+                                racesThird: 1
+                            }
+                        };
+                        break;
+                }
+
+                User.findOneAndUpdate({
+                    username: medalist.username
+                }, update, {}, callback)
+
+                function callback(err, user) {
+                    if (err) {
+                        res.json(err)
+                    }
+                    count += 1;
+                    console.log(count, ":", req.body.medalists.length);
+                    if (count == req.body.medalists.length) {
+                        res.json('finished');
+                    };
+                };
+            })
+        }
+    })
+})
 
 router.post('/checkin', function(req, res, next) {
     var username = CONFIG.getUserToken(req.get("authorization"));
@@ -74,7 +178,7 @@ router.post('/checkin', function(req, res, next) {
 
         update = {
             "$inc": {
-                "spots.$.visitCount": 1 
+                "spots.$.visitCount": 1
             }
         },
         options = {
