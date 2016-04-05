@@ -6,6 +6,12 @@ SALT_WORK_FACTOR = 10;
 MAX_LOGIN_ATTEMPTS = 5;
 LOCK_TIME = 60 * 5 * 1000; // 5 minute lock
 
+POINTS_LOC_VISIT = 15;
+POINTS_RACE_RACED = 10;
+POINTS_RACE_WON = 50;
+POINTS_RACE_SECOND = 25;
+POINTS_RACE_THIRD = 10;
+
 var spotSchema = new mongoose.Schema({
     name: String,
     visitCount: Number
@@ -34,15 +40,25 @@ var UserSchema = new Schema({
         type: String,
         default: ""
     },
-    riderRep: {
-        type: Number,
-        required: true,
-        default: 0
-    },
     spots: {
         type: [spotSchema]
     },
-
+    racesRaced: {
+        type: Number,
+        default: 0
+    },
+    racesWon: {
+        type: Number,
+        default: 0
+    },
+    racesSecond: {
+        type: Number,
+        default: 0
+    },
+    racesThird: {
+        type: Number,
+        default: 0
+    },
     loginAttempts: {
         type: Number,
         required: true,
@@ -51,6 +67,35 @@ var UserSchema = new Schema({
     lockUntil: {
         type: Number
     }
+}, {
+  toObject: {
+  virtuals: true
+  },
+  toJSON: {
+  virtuals: true 
+  }
+});
+
+
+UserSchema.virtual('riderRep').get(function() {
+    var rep = 0;
+    this.spots.forEach(function(spot){
+        rep += spot.visitCount * POINTS_LOC_VISIT;
+        console.log("virtual rep: ", rep);
+    });
+
+    if (!isNaN(this.racesWon)) {
+        rep += this.racesWon * POINTS_RACE_WON
+    };
+    if (!isNaN(this.racesSecond)) {
+        rep += this.racesSecond * POINTS_RACE_SECOND
+    };
+    if (!isNaN(this.racesThird)) {
+        rep += this.racesThird * POINTS_RACE_THIRD
+    };
+
+    console.log("virtual rep: ", rep);
+    return rep;
 });
 
 UserSchema.virtual('isLocked').get(function() {

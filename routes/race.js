@@ -18,6 +18,8 @@ router.post('/', function(req, res, next) {
     race.location = req.body.location;
     race.date = req.body.date;
 
+    console.log(req.body.racers);
+
     req.body.racers.forEach(function(_racer) {
         var racer = new Racer({
             name: _racer.name
@@ -27,10 +29,10 @@ router.post('/', function(req, res, next) {
 
     race.save(function(err) {
         if (!err) {
-            res.send("Race saved").status(200);
+            res.json("Race saved").status(200);
         } else {
             console.log(err);
-            res.status(500).send(err);
+            res.status(500).json(err);
         }
     });
 });

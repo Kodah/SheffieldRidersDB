@@ -8,7 +8,7 @@ var RaceSchema = new Schema({
     creator: String,
     location: String,
     racers: [Racer],
-    date: Date ,
+    date: Number,
     finished: {
         type: Boolean,
         default: false

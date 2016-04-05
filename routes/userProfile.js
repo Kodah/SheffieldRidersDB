@@ -16,7 +16,12 @@ router.get('/', function(req, res, next) {
         "riderRep": 1,
         "discipline": 1,
         "quote": 1,
-        "username": 1
+        "username": 1,
+        "racesRaced": 1,
+        "racesWon": 1,
+        "racesSecond": 1,
+        "racesThird": 1
+
     }).sort('riderRep').exec(function(err, riders) {
         res.json(riders);
     });
