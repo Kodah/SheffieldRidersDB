@@ -33,7 +33,7 @@ router.post('/', function(req, res, next) {
         }
         else
         {
-            res.status(401).send(reasons[reason]); 
+            res.status(401).json(reasons[reason]); 
         }
 
     });

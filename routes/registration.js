@@ -24,6 +24,8 @@ router.post('/', function(req, res, next) {
         {'name': 'ParkwoodSprings', 'visitCount': 0},
         {'name': 'MonkeyBumps', 'visitCount': 0},
         {'name': 'BowlHills', 'visitCount': 0},
+        {'name': 'Cantor', 'visitCount': 0},
+        
     ]
     
     user.save(function(err) {
