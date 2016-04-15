@@ -64,8 +64,10 @@ router.get('/owner', function(req, res) {
     });
 })
 
-router.post('/quote', function(req, res) {
+router.put('/quote', function(req, res) {
     var username = CONFIG.getUserToken(req.get("authorization"));
+
+    console.log(req.body);
 
     var conditions = {
             "username": username
@@ -91,7 +93,7 @@ router.post('/quote', function(req, res) {
     };
 })
 
-router.post('/discipline', function(req, res) {
+router.put('/discipline', function(req, res) {
     var username = CONFIG.getUserToken(req.get("authorization"));
 
     var conditions = {
