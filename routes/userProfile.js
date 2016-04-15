@@ -64,6 +64,60 @@ router.get('/owner', function(req, res) {
     });
 })
 
+router.post('/quote', function(req, res) {
+    var username = CONFIG.getUserToken(req.get("authorization"));
+
+    var conditions = {
+            "username": username
+        },
+
+        update = {
+            "quote": req.body.quote
+        },
+        options = {
+            multi: false
+        };
+
+    User.findOneAndUpdate(conditions, update, options, callback);
+
+    function callback(err, numAffected) {
+        if (err) {
+            res.json(err)
+        } else if (numAffected == null) {
+            res.json("Error").status(403);
+        } else {
+            res.json("Success").status(200);
+        };
+    };
+})
+
+router.post('/discipline', function(req, res) {
+    var username = CONFIG.getUserToken(req.get("authorization"));
+
+    var conditions = {
+            "username": username
+        },
+
+        update = {
+            "discipline": req.body.discipline
+        },
+        options = {
+            multi: false
+        };
+
+    User.findOneAndUpdate(conditions, update, options, callback);
+
+    function callback(err, numAffected) {
+        if (err) {
+            res.json(err)
+        } else if (numAffected == null) {
+            res.json("Error").status(403);
+        } else {
+            res.json("Success").status(200);
+        };
+    };
+})
+
 router.put('/racesRaced', function(req, res) {
     var username = CONFIG.getUserToken(req.get("authorization"));
 
